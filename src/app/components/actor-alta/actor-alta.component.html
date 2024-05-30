@@ -1,0 +1,126 @@
+<div class="container">
+    <main>
+      <div class="py-3 text-center">
+        <h2>ALTA ACTOR</h2>
+      </div>
+  
+      <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">SELECCIONA UN PAÍS</span>
+          </h4>
+  
+          <app-tabla-paises (PasamosUnPais)="tomarPaisSeleccionado($event)"></app-tabla-paises>
+
+          <br />
+          <small style="color: red" *ngIf="forma.invalid && formEnviado">
+            El país es requerido
+          </small>
+        </div>
+
+        
+        <div class="col-md-7 col-lg-8">
+          <form [formGroup]="forma" (ngSubmit)="agregarActor($event)">
+            <h4 class="mb-3 text-primary">DATOS ACTOR</h4>
+            <div class="row g-3">
+              <!-- CONTROL NOMBRE -->
+              <div class="col-sm-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" required/>
+                <small style="color: red"
+                  *ngIf="forma.controls['nombre'].errors?.['required'] && forma.controls['nombre'].touched">
+                  El nombre es requerido
+                </small>
+                <small style="color: red" *ngIf="forma.controls['nombre'].errors?.['containsSpaces'] && forma.controls['nombre'].touched">
+                  El nombre no puede contener espacios
+                </small>
+              </div>
+              <!-- CONTROL APELLIDO -->
+              <div class="col-sm-6">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" formControlName="apellido" required/>
+                <small style="color: red"
+                  *ngIf="forma.controls['apellido'].errors?.['required'] && forma.controls['apellido'].touched">
+                  El apellido es requerido
+                </small>
+                <small style="color: red"
+                  *ngIf="forma.controls['apellido'].errors?.['containsSpaces'] && forma.controls['apellido'].touched">
+                  El apellido no puede contener espacios
+                </small>
+              </div>
+              <!-- CONTROL EDAD -->
+              <div class="col-md-3">
+                <label for="edad" class="form-label">Edad</label>
+                <input type="number" formControlName="edad" class="form-control" formControlName="edad" required/>
+                <small style="color: red"
+                  *ngIf="forma.controls['edad'].errors?.['required'] && forma.controls['edad'].touched">
+                  La edad es requerida
+                </small>
+                <small style="color: red"
+                  *ngIf="forma.controls['edad'].errors?.['min'] || (forma.controls['edad'].errors?.['max'] && forma.controls['edad'].touched)">
+                  La edad debe ser de 18 a 99 años
+                </small>
+              </div>
+              <!-- CONTROL SEXO -->
+              <div class="col-md-5" style="width: contain">
+                <label for="sexo" class="form-label">Sexo</label>
+                <br>
+                <select id="sexo" formControlName="sexo" required>
+                  <option value="">Seleccione uno</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                <br />
+                <small style="color: red"
+                  *ngIf="forma.controls['sexo'].errors?.['required'] && forma.controls['sexo'].touched">
+                  El sexo es requerido
+                </small>
+              </div>
+              <!-- CONTROL PAIS -->
+              <div class="col-sm-6">
+                <label for="nombrePais" class="form-label">Pais</label>
+                <div style="display: flex">
+                  <input type="text" class="form-control" formControlName="nombrePais"
+                    [ngModel]="actorNuevo.nombrePais"
+                    required
+                    readonly
+                  />
+                  <img
+                    *ngIf="actorNuevo.banderaPais"
+                    style="margin-left: 1rem; width: 60px; height: 50px;"
+                    src="{{ actorNuevo.banderaPais }}"
+                    alt=""
+                  />
+                </div>
+                <small style="color: red"
+                  *ngIf="forma.controls['nombrePais'].errors?.['required'] && forma.controls['nombrePais'].touched">
+                  El pais es requerido
+                </small>
+              </div>
+            </div>
+  
+            <hr class="my-4" />
+  
+            <button class="w-100 btn btn-primary btn-lg" type="submit">
+              Registrar Actor
+            </button>
+          </form>
+        </div>
+      </div>
+  
+      <button style="margin-top: 2rem; display: block; margin-left: auto; margin-right: auto;"
+        class="w-50 btn btn-lg"
+        [ngClass]="vistaListado ? 'btn-danger' : 'btn-success'"
+        type="button"
+        (click)="verListado()"
+      >
+        {{ textoVistaListado }}
+      </button>
+  
+      <div class="py-5 text-center" *ngIf="vistaListado">
+        <h2>LISTADO DE ACTORES</h2>
+        <app-actor-listado
+          [listadoRecibidoDeActores]="listadoActores"
+        ></app-actor-listado>
+      </div>
+    </main>

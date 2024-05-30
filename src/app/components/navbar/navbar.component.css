@@ -1,0 +1,12 @@
+body{
+  margin: 0;
+}
+
+header{
+  display: flex;
+  height: 70px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+

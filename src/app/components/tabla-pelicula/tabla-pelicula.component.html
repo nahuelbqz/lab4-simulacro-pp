@@ -1,0 +1,24 @@
+
+<h2 class="text-center">TABLA PELICULA</h2>
+<table class="table">
+    <thead>
+        <tr align="center"> 
+            <th scope="col">ID</th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">TIPO</th>
+            <th scope="col">FECHA ESTRENO</th>
+            <th scope="col">PUBLICO</th>
+        </tr>
+    </thead>
+
+    <tbody *ngFor="let pelicula of listaPeliculasInput">
+        <tr align="center">
+            <td>{{pelicula.id}}</td>
+            <td>{{pelicula.nombre}}</td>
+            <td>{{pelicula.tipo}}</td>
+            <td>{{pelicula.fechaEstreno}}</td>
+            <td>{{pelicula.cantidadPublico}}</td>
+            <td><button class="btn btn-primary" name="peliculaSeleccionada" (click)="enviarItemHaciaPadre(pelicula)">Detalle</button></td>
+        </tr>
+    </tbody>
+</table>
